@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -31,6 +32,7 @@ public class VoucherService {
     @Autowired
     private AuditClient auditClient;
 
+    @Transactional
     public RedeemResponse redeem(String code, String userId) {
 
         Voucher voucher = voucherRepository.findByCode(code);
@@ -46,7 +48,7 @@ public class VoucherService {
             return RedeemResponse.fail("Voucher is void");
         }
 
-        Campaign campaign = campaignRepository.findById(voucher.getCampaignId()).get();
+        Campaign campaign = campaignRepository.findByIdForUpdate(voucher.getCampaignId()).get();
 
         if (!campaign.isActive()) {
             return RedeemResponse.fail("Campaign is not active");
