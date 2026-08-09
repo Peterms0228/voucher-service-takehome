@@ -25,4 +25,9 @@ public class CampaignController {
     public List<CampaignStats> statsByClient(@PathVariable String clientCode) {
         return campaignStatsService.getStatsForClient(clientCode);
     }
+
+    @PutMapping("/{id}/update-max-redemptions")
+    public boolean updateMaxRedemptionsPerUser(@PathVariable Long id, @RequestParam int maxRedemptionsPerUser) {
+        return campaignStatsService.updateMaxRedemptionsPerUserById(id, maxRedemptionsPerUser);
+    }
 }

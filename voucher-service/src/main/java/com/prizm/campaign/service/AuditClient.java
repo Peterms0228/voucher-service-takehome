@@ -3,6 +3,7 @@ package com.prizm.campaign.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -25,7 +26,12 @@ public class AuditClient {
         payload.put("userId", userId);
         payload.put("apiKey", API_KEY);
 
-        restTemplate.postForObject(AUDIT_URL, payload, String.class);
+        try{
+            restTemplate.postForObject(AUDIT_URL, payload, String.class);
+        } catch (RestClientException e) {
+            log.error(e.getMessage());
+            throw new RuntimeException(e);
+        }
         log.info("audit event sent for {}", voucherCode);
     }
 }

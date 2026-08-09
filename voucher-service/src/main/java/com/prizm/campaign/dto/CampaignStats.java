@@ -8,6 +8,7 @@ public class CampaignStats {
     private int remainingStock;
     private int redeemedCount;
     private int activeVoucherCount;
+    private int maxRedemptionsPerUser;
 
     public Long getCampaignId() { return campaignId; }
     public void setCampaignId(Long campaignId) { this.campaignId = campaignId; }
@@ -21,4 +22,6 @@ public class CampaignStats {
     public void setRedeemedCount(int redeemedCount) { this.redeemedCount = redeemedCount; }
     public int getActiveVoucherCount() { return activeVoucherCount; }
     public void setActiveVoucherCount(int activeVoucherCount) { this.activeVoucherCount = activeVoucherCount; }
+    public int getMaxRedemptionsPerUser() { return maxRedemptionsPerUser; }
+    public void setMaxRedemptionsPerUser(int maxRedemptionsPerUser) { this.maxRedemptionsPerUser = maxRedemptionsPerUser; }
 }

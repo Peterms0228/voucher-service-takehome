@@ -27,3 +27,5 @@ CREATE TABLE redemption (
     user_id     VARCHAR(80) NOT NULL,
     created_at  TIMESTAMP   NOT NULL
 );
+
+ALTER TABLE campaign ADD COLUMN max_redemptions_per_user INT DEFAULT 2;

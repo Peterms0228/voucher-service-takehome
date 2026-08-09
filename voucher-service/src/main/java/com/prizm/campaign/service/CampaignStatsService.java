@@ -6,10 +6,13 @@ import com.prizm.campaign.model.Voucher;
 import com.prizm.campaign.repository.CampaignRepository;
 import com.prizm.campaign.repository.RedemptionRepository;
 import com.prizm.campaign.repository.VoucherRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CampaignStatsService {
@@ -17,6 +20,8 @@ public class CampaignStatsService {
     private final CampaignRepository campaignRepository;
     private final VoucherRepository voucherRepository;
     private final RedemptionRepository redemptionRepository;
+
+    private static final Logger log = LoggerFactory.getLogger(CampaignStatsService.class);
 
     public CampaignStatsService(CampaignRepository campaignRepository,
                                 VoucherRepository voucherRepository,
@@ -50,6 +55,7 @@ public class CampaignStatsService {
         stats.setRemainingStock(campaign.getRemainingStock());
         stats.setRedeemedCount(redeemed);
         stats.setActiveVoucherCount(active);
+        stats.setMaxRedemptionsPerUser(campaign.getMaxRedemptionsPerUser());
         return stats;
     }
 
@@ -59,5 +65,21 @@ public class CampaignStatsService {
             out.add(getStats(c.getId()));
         }
         return out;
+    }
+
+    public boolean updateMaxRedemptionsPerUserById(Long id, int maxRedemptionsPerUser) {
+        Optional<Campaign> campaignOpt = campaignRepository.findById(id);
+
+        if(campaignOpt.isEmpty()){
+            log.error("Campaign id not found: {}", id);
+            return false;
+        }
+
+        Campaign campaign = campaignOpt.get();
+        campaign.setMaxRedemptionsPerUser(maxRedemptionsPerUser);
+
+        campaignRepository.save(campaign);
+
+        return true;
     }
 }
