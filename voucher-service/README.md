@@ -15,12 +15,13 @@ H2 in-memory DB, seeded from `src/main/resources/schema.sql` + `data.sql` on sta
 
 ## Endpoints
 
-| Method | Path | Notes |
-|---|---|---|
-| POST | `/vouchers/{code}/redeem?userId=...` | Redeem a voucher |
-| POST | `/vouchers/{code}/void` | Mark a voucher void |
-| GET | `/campaigns/{id}/stats` | Stock + redemption counts |
-| GET | `/campaigns/by-client/{clientCode}/stats` | Same, per client |
+| Method | Path                                                               | Notes |
+|--------|--------------------------------------------------------------------|---|
+| POST   | `/vouchers/{code}/redeem?userId=...`                               | Redeem a voucher |
+| POST   | `/vouchers/{code}/void`                                            | Mark a voucher void |
+| GET    | `/campaigns/{id}/stats`                                            | Stock + redemption counts |
+| GET    | `/campaigns/by-client/{clientCode}/stats`                          | Same, per client |
+| PUT    | `/campaigns/{id}/update-max-redemptions?maxRedemptionsPerUser=...` | Update max redemptions |
 
 ## Sample data
 
