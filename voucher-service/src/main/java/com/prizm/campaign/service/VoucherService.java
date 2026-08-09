@@ -57,8 +57,8 @@ public class VoucherService {
         }
 
         //2026/8/10 add per user limit
-        if (campaign.getMaxRedemptionsPerUser() <= redemptionRepository
-                .countByCampaignIdAndUserId(voucher.getCampaignId(), userId)) {
+        if (campaign.getMaxRedemptionsPerUser() <= voucherRepository
+                .countByCampaignIdAndRedeemedByAndStatus(voucher.getCampaignId(), userId, "REDEEMED")) {
             return RedeemResponse.fail("Per-user redemption limit reached");
         }
 
